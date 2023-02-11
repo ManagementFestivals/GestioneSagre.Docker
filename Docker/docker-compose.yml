@@ -1,0 +1,43 @@
+version: '3.7'
+
+services:
+  sqlserver:
+    container_name: sqlserver
+    build:
+      context: .
+      dockerfile: SQLServer/Dockerfile
+    restart: always
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=[INSERT-YOUR-PASSWORD]
+      - MSSQL_PID=Express
+    networks:
+      - lan-network
+    volumes:
+      - /docker/gestionesagre/data/sqlserver:/var/opt/mssql/data
+    ports:
+      - 1433:1433
+              
+rabbitmq:
+  container_name: rabbitmq
+  build:
+    context: .
+    dockerfile: RabbitMQ/Dockerfile
+  restart: always
+  volumes:
+    - /docker/gestionesagre/data/rabbitmq/files:/var/lib/rabbitmq
+    - /docker/gestionesagre/data/rabbitmq/logs:/var/log/rabbitmq/log
+  environment:
+    - RABBITMQ_DEFAULT_USER=admin
+    - RABBITMQ_DEFAULT_PASS=[INSERT-YOUR-PASSWORD]
+    - RABBITMQ_NODENAME=rabbit@localhost
+  ports:
+    - 5672:5672
+    - 15672:15672
+  networks:
+    - lan-network
+            
+networks:
+  lan-network:
+    external:
+      name: docker-net
