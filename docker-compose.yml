@@ -36,6 +36,19 @@ services:
       - 15672:15672
     networks:
       - lan-network
+      
+  redis:
+    container_name: redis
+    build:
+      context: .
+      dockerfile: Redis/Dockerfile
+    restart: always
+    volumes:
+      - /docker/gestione-sagre/storage/redis/data:/data
+    ports:
+      - 6379:6379
+    networks:
+      - lan-network
               
   networks:
     lan-network:
