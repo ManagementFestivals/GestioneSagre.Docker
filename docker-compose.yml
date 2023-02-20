@@ -14,7 +14,7 @@ services:
     networks:
       - lan-network
     volumes:
-      - /docker/gestione-sagre/storage/sqlserver/data:/var/opt/mssql/data
+      - /docker/storage/sqlserver/data:/var/opt/mssql/data
     ports:
       - 1433:1433
               
@@ -25,8 +25,8 @@ services:
       dockerfile: RabbitMQ/Dockerfile
     restart: always
     volumes:
-      - /docker/gestione-sagre/storage/rabbitmq/files:/var/lib/rabbitmq
-      - /docker/gestione-sagre/storage/rabbitmq/logs:/var/log/rabbitmq/log
+      - /docker/storage/rabbitmq/files:/var/lib/rabbitmq
+      - /docker/storage/rabbitmq/logs:/var/log/rabbitmq/log
     environment:
       - RABBITMQ_DEFAULT_USER=admin
       - RABBITMQ_DEFAULT_PASS=CHANGE-ME
@@ -44,7 +44,7 @@ services:
       dockerfile: Redis/Dockerfile
     restart: always
     volumes:
-      - /docker/gestione-sagre/storage/redis/data:/data
+      - /docker/storage/storage/redis/data:/data
     ports:
       - 6379:6379
     networks:
